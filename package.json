@@ -1,0 +1,17 @@
+{
+  "name": "typed-apis",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "parcel index.html",
+    "build": "parcel build index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^2.9.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.109",
+    "lodash": "^4.17.10"
+  }
+}
