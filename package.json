@@ -1,11 +1,21 @@
 {
   "name": "typed-apis",
-  "version": "0.1.0",
+  "version": "0.1.2",
+  "description": "Unified JavaScript APIs from various providers",
+  "keywords": [
+    "google-api",
+    "google-login",
+    "facebook-api",
+    "facebook-login",
+    "google-maps-api"
+  ],
+  "repository": "https://github.com/stefankorun/typed-apis",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "serve": "parcel index.html",
-    "build": "parcel build index.ts"
+    "build": "parcel build index.ts",
+    "npm-publish": "npm run build && npm publish"
   },
   "devDependencies": {
     "typescript": "^2.9.1"

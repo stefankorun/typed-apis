@@ -11,7 +11,6 @@
 
 ## Usage
 ### Installation
-> :exclamation: Pending `npm` publish - not available yet
 
 	npm install typed-apis --save
 
@@ -19,11 +18,13 @@
 
 > Google OAuth2 client sign-in
 
-	import {Google} from 'typed-apis'
-	
-	Google.load({apiKey: 'public-api-key'}).then(Google => {   
-		Google.getAuth2().signIn().then(GoogleUser => {  
-			console.log('GoogleUser', GoogleUser)
-		})
-	})
+```javascript
+import {Google} from 'typed-apis'
+
+Google.load({apiKey: 'public-api-key'}).then(Google => {   
+    Google.getAuth2().signIn().then(GoogleUser => {  
+        console.log('GoogleUser', GoogleUser)
+    })
+})
+```
 		
