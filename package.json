@@ -1,6 +1,6 @@
 {
   "name": "typed-apis",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "Unified JavaScript APIs from various providers",
   "keywords": [
     "google-api",
@@ -15,7 +15,7 @@
   "scripts": {
     "serve": "parcel index.html",
     "build": "parcel build index.ts",
-    "npm-publish": "npm run build && npm publish"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "typescript": "^2.9.1"
