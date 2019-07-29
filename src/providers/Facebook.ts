@@ -1,42 +1,33 @@
-import {defaultsDeep} from "lodash";
-import {loadScriptCached} from "../loader";
+import { loadScriptCached } from "../loader";
 
 interface FacebookSDKBaseOptions extends SDKBaseOptions {
-  appId: String
+  appId: String;
 }
 
 interface FacebookSDKInterface {
-  init: Function
-  login: Function
+  init: Function;
+  login: Function;
 }
 
-export class Facebook implements SDKBase {
-  private static options: FacebookSDKBaseOptions;
-  private static coreSDK: FacebookSDKInterface;
+export class Facebook extends SDKBase<
+  FacebookSDKInterface,
+  FacebookSDKBaseOptions
+> {
+  static load(options?: FacebookSDKBaseOptions) {
+    const apiUrl = "https://connect.facebook.net/en_US/sdk.js";
+    const finalOptions = { ...this._defaultOptions, ...options };
 
-  static load(options?: FacebookSDKBaseOptions): Promise<SDKBase> {
-    this.options = defaultsDeep(options, _defaultOptions);
+    return loadScriptCached(apiUrl).then(() => {
+      const coreSDK = (<any>window).FB;
 
-    return loadScriptCached(this.options.apiUrl).then(() => {
-      this.coreSDK = (<any>window).FB;
-
-      this.coreSDK.init({
-        appId: this.options.apiKey,
+      coreSDK.init({
+        appId: finalOptions.apiKey,
         autoLogAppEvents: true,
         xfbml: true,
-        version: 'v3.0'
+        version: "v3.0"
       });
 
-      return new Facebook;
+      return new Facebook(coreSDK, finalOptions);
     });
   }
-
-  getFB() {
-    return Facebook.coreSDK;
-  }
 }
-
-const _defaultOptions: FacebookSDKBaseOptions = {
-  appId: undefined,
-  apiUrl: 'https://connect.facebook.net/en_US/sdk.js',
-};

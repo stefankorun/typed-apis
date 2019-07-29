@@ -1,10 +1,9 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "strict": false,
-        "lib": [
-            "es2016", "dom"
-        ]
-    }
+  "compilerOptions": {
+    "outDir": "lib",
+    "target": "es5",
+    "module": "es2015",
+    "strict": true,
+    "lib": ["es2016", "dom"]
+  }
 }

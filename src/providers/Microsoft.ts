@@ -1,48 +1,52 @@
-import {defaultsDeep} from "lodash";
-import {loadScriptCached} from "../loader";
+import { loadScriptCached } from "../loader";
 
 interface MicrosoftSDKBaseOptions extends SDKBaseOptions {
-  appId: String
+  appId: String;
 }
 
 interface MicrosoftSDKInterface {
-  UserAgentApplication: any
+  UserAgentApplication: any;
 }
 
 // ref: https://github.com/AzureAD/microsoft-authentication-library-for-js
-export class Microsoft implements SDKBase {
-  private static options: MicrosoftSDKBaseOptions;
-  public static coreSDK: MicrosoftSDKInterface;
+export class Microsoft extends SDKBase<
+  MicrosoftSDKInterface,
+  MicrosoftSDKBaseOptions
+> {
+  static load(options?: MicrosoftSDKBaseOptions) {
+    const finalOptions = { ...this._defaultOptions, ...options };
+    const apiUrl =
+      "https://secure.aadcdn.microsoftonline-p.com/lib/0.1.3/js/msal.min.js";
 
-  static load(options?: MicrosoftSDKBaseOptions): Promise<SDKBase> {
-    this.options = defaultsDeep(options, _defaultOptions);
-
-    return loadScriptCached(this.options.apiUrl).then(() => {
-      let Msal = (<any>window).Msal;
+    return loadScriptCached(apiUrl).then(() => {
+      const Msal = (<any>window).Msal;
 
       // todo: Provide Logger as option instead of requirement
-      let logger = new Msal.Logger((logLevel, message, piiLoggingEnabled) => console.log(message), {
-        level: Msal.LogLevel.Verbose,
-        correlationId: '12345'
-      });
+      let logger = new Msal.Logger(
+        (_logLevel: any, message: any, _piiLoggingEnabled: any) =>
+          console.log(message),
+        {
+          level: Msal.LogLevel.Verbose,
+          correlationId: "12345"
+        }
+      );
 
-      this.coreSDK = new Msal.UserAgentApplication(this.options.appId, null, () => console.log('authSuccess'), {
-        logger: logger,
-        cacheLocation: 'localStorage',
-        navigateToLoginRequestUrl: false,
-      });
+      const coreSDK = new Msal.UserAgentApplication(
+        finalOptions.appId,
+        null,
+        () => console.log("authSuccess"),
+        {
+          logger: logger,
+          cacheLocation: "localStorage",
+          navigateToLoginRequestUrl: false
+        }
+      );
 
-      return new Microsoft;
+      return new Microsoft(coreSDK, finalOptions);
     });
   }
 
   getAgentApplication() {
-    return Microsoft.coreSDK;
+    return this.sdk;
   }
 }
-
-const _defaultOptions: MicrosoftSDKBaseOptions = {
-  appId: undefined,
-  apiUrl: 'https://secure.aadcdn.microsoftonline-p.com/lib/0.1.3/js/msal.min.js',
-  // apiUrl: 'https://js.live.net/v5.0/wl.js',
-};

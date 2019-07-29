@@ -1,13 +1,18 @@
 interface SDKBaseOptions {
-  apiKey?: string,
-  apiUrl: string,
+  apiKey?: string;
 }
 
-abstract class SDKBase {
-  static coreSDK: any;
+abstract class SDKBase<TSdk, TOptions> {
+  protected static _defaultOptions: any;
 
-  static load(options: SDKBaseOptions): Promise<SDKBase> {
-    console.warn('load() method not implemented');
+  get sdk() {
+    return this.coreSDK;
+  }
+
+  constructor(protected coreSDK: TSdk, protected options?: TOptions) {}
+
+  static load(options?: SDKBaseOptions): unknown {
+    console.warn("load() method not implemented");
     return undefined;
-  };
+  }
 }

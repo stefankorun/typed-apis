@@ -1,35 +1,34 @@
-import {defaultsDeep} from "lodash";
-import {loadScriptCached} from "../loader";
+import { loadScriptCached } from "../loader";
 
 interface GoogleMapsSDKBaseOptions extends SDKBaseOptions {
-  loadLibraries: Array<string>
+  loadLibraries: Array<string>;
 }
 
 interface GoogleMapsSDKInterface {
-  places: any
+  places: any;
 }
 
-export class GoogleMaps implements SDKBase {
-  private static options: GoogleMapsSDKBaseOptions;
-  private static coreSDK: GoogleMapsSDKInterface;
+export class GoogleMaps extends SDKBase<
+  GoogleMapsSDKInterface,
+  GoogleMapsSDKBaseOptions
+> {
+  protected static _defaultOptions: GoogleMapsSDKBaseOptions = {
+    loadLibraries: ["places"]
+  };
 
-  static load(options?: GoogleMapsSDKBaseOptions): Promise<SDKBase> {
-    this.options = defaultsDeep(options, _defaultOptions);
+  static load(options?: GoogleMapsSDKBaseOptions) {
+    const finalOptions = { ...this._defaultOptions, ...options };
 
-    const apiUrl = `https://maps.googleapis.com/maps/api/js?key=${this.options.apiKey}&libraries=${this.options.loadLibraries.join(',')}`;
+    const apiUrl = `https://maps.googleapis.com/maps/api/js?key=${
+      finalOptions.apiKey
+    }&libraries=${finalOptions.loadLibraries.join(",")}`;
+
     return loadScriptCached(apiUrl).then(() => {
-      this.coreSDK = (<any>window).google.maps;
-      return new GoogleMaps;
+      return new GoogleMaps((<any>window).google.maps, finalOptions);
     });
   }
 
   getAutocompleteService() {
-    return new GoogleMaps.coreSDK.places.AutocompleteService
+    return new this.sdk.places.AutocompleteService();
   }
 }
-
-const _defaultOptions: GoogleMapsSDKBaseOptions = {
-  apiKey: undefined,
-  apiUrl: 'https://apis.google.com/js/platform.js',
-  loadLibraries: ['places']
-};
