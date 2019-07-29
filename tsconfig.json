@@ -3,6 +3,7 @@
     "outDir": "lib",
     "target": "es5",
     "module": "es2015",
+    "esModuleInterop": true,
     "strict": true,
     "lib": ["es2016", "dom"]
   }

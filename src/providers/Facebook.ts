@@ -1,4 +1,5 @@
 import { loadScriptCached } from "../loader";
+import {SDKBase, SDKBaseOptions} from "../definitions";
 
 interface FacebookSDKBaseOptions extends SDKBaseOptions {
   appId: String;

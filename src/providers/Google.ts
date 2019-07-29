@@ -1,7 +1,8 @@
-import { loadScriptCached } from "../loader";
+import {loadScriptCached} from "../loader";
+import {SDKBase, SDKBaseOptions} from "../definitions";
 
 interface GoogleSDKBaseOptions extends SDKBaseOptions {
-  loadServices: Array<string>;
+  loadServices?: Array<string>;
 }
 
 interface GoogleSDKInterface {
@@ -13,24 +14,27 @@ interface GoogleSDKInterface {
 }
 
 export class Google extends SDKBase<GoogleSDKInterface, GoogleSDKBaseOptions> {
-  protected static _defaultOptions: GoogleSDKBaseOptions = {
-    loadServices: ["auth", "client"]
+  protected static _defaultOptions = {
+    loadServices: ["auth", "client"],
+    apiKey: undefined
   };
 
   static load(options?: GoogleSDKBaseOptions) {
     const apiUrl = "https://apis.google.com/js/platform.js";
-    const finalOptions = { ...this._defaultOptions, ...options };
+    const finalOptions = {...this._defaultOptions, ...options};
+
+    if (!finalOptions.apiKey) throw new Error('API key is required');
 
     return loadScriptCached(apiUrl).then(() => {
       const sdk = (<any>window).gapi;
-
-      return new Promise(resolve => {
-        sdk.load(finalOptions.loadServices.join(":"), () => {
-          if (sdk.auth2) sdk.auth2.init({ client_id: finalOptions.apiKey });
-          resolve(new Google(sdk));
-        });
-      });
-    });
+      //
+      // return new Promise(resolve => {
+      //   sdk.load(finalOptions.loadServices.join(":"), () => {
+      //     if (sdk.auth2) Promise.resolve(sdk.auth2.init({client_id: finalOptions.apiKey})).catch(console.warn);
+      //   });
+      //   resolve(new Google(sdk));
+      // });
+    }).catch(console.warn);
   }
 
   getAuth2() {

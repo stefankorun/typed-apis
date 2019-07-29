@@ -1,8 +1,8 @@
-interface SDKBaseOptions {
+export interface SDKBaseOptions {
   apiKey?: string;
 }
 
-abstract class SDKBase<TSdk, TOptions> {
+export abstract class SDKBase<TSdk, TOptions> {
   protected static _defaultOptions: any;
 
   get sdk() {
