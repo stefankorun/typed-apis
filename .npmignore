@@ -25,3 +25,4 @@ index.html
 .editorconfig
 tsconfig.json
 README.md
+/src/__tests__

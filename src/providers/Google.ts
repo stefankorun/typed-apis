@@ -27,13 +27,14 @@ export class Google extends SDKBase<GoogleSDKInterface, GoogleSDKBaseOptions> {
 
     return loadScriptCached(apiUrl).then(() => {
       const sdk = (<any>window).gapi;
-      //
-      // return new Promise(resolve => {
-      //   sdk.load(finalOptions.loadServices.join(":"), () => {
-      //     if (sdk.auth2) Promise.resolve(sdk.auth2.init({client_id: finalOptions.apiKey})).catch(console.warn);
-      //   });
-      //   resolve(new Google(sdk));
-      // });
+
+      return new Promise(resolve => {
+        sdk.load(finalOptions.loadServices.join(":"), () => {
+          if (sdk.auth2) Promise.resolve(sdk.auth2.init({client_id: finalOptions.apiKey})).catch(console.warn);
+        });
+        resolve(new Google(sdk));
+      });
+
     }).catch(console.warn);
   }
 
