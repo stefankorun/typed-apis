@@ -16,7 +16,7 @@
     "test": "jest",
     "serve": "parcel index.html",
     "build": "parcel build index.ts",
-    "prettier": "prettier --check 'src/**/*.ts'",
+    "prettier": "prettier --write 'src/**/*.ts'",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import {memoize} from "lodash";
+import { memoize } from 'lodash';
 
 export const loadScriptCached = memoize(loadScript);
 
@@ -12,5 +12,5 @@ function loadScript(src: String) {
       onerror: rej,
     });
     document.body.appendChild(script);
-  })
+  });
 }

@@ -1,5 +1,5 @@
-import { loadScriptCached } from "../loader";
-import {SDKBase, SDKBaseOptions} from "../definitions";
+import { loadScriptCached } from '../loader';
+import { SDKBase, SDKBaseOptions } from '../definitions';
 
 interface MicrosoftSDKBaseOptions extends SDKBaseOptions {
   appId: String;
@@ -17,7 +17,7 @@ export class Microsoft extends SDKBase<
   static load(options?: MicrosoftSDKBaseOptions) {
     const finalOptions = { ...this._defaultOptions, ...options };
     const apiUrl =
-      "https://secure.aadcdn.microsoftonline-p.com/lib/0.1.3/js/msal.min.js";
+      'https://secure.aadcdn.microsoftonline-p.com/lib/0.1.3/js/msal.min.js';
 
     return loadScriptCached(apiUrl).then(() => {
       const Msal = (<any>window).Msal;
@@ -28,18 +28,18 @@ export class Microsoft extends SDKBase<
           console.log(message),
         {
           level: Msal.LogLevel.Verbose,
-          correlationId: "12345"
+          correlationId: '12345',
         }
       );
 
       const coreSDK = new Msal.UserAgentApplication(
         finalOptions.appId,
         null,
-        () => console.log("authSuccess"),
+        () => console.log('authSuccess'),
         {
           logger: logger,
-          cacheLocation: "localStorage",
-          navigateToLoginRequestUrl: false
+          cacheLocation: 'localStorage',
+          navigateToLoginRequestUrl: false,
         }
       );
 

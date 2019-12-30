@@ -1,5 +1,5 @@
-import { loadScriptCached } from "../loader";
-import {SDKBase, SDKBaseOptions} from "../definitions";
+import { loadScriptCached } from '../loader';
+import { SDKBase, SDKBaseOptions } from '../definitions';
 
 interface FacebookSDKBaseOptions extends SDKBaseOptions {
   appId: String;
@@ -15,7 +15,7 @@ export class Facebook extends SDKBase<
   FacebookSDKBaseOptions
 > {
   static load(options?: FacebookSDKBaseOptions) {
-    const apiUrl = "https://connect.facebook.net/en_US/sdk.js";
+    const apiUrl = 'https://connect.facebook.net/en_US/sdk.js';
     const finalOptions = { ...this._defaultOptions, ...options };
 
     return loadScriptCached(apiUrl).then(() => {
@@ -25,7 +25,7 @@ export class Facebook extends SDKBase<
         appId: finalOptions.apiKey,
         autoLogAppEvents: true,
         xfbml: true,
-        version: "v3.0"
+        version: 'v3.0',
       });
 
       return new Facebook(coreSDK, finalOptions);

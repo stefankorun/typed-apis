@@ -12,7 +12,7 @@ export abstract class SDKBase<TSdk, TOptions> {
   constructor(protected coreSDK: TSdk, protected options?: TOptions) {}
 
   static load(options?: SDKBaseOptions): unknown {
-    console.warn("load() method not implemented");
+    console.warn('load() method not implemented');
     return undefined;
   }
 }
