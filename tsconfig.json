@@ -7,9 +7,9 @@
     "module": "es2015",
     "esModuleInterop": true,
     "strict": true,
-    "lib": [
-      "es2016",
-      "dom"
-    ]
-  }
+    "skipLibCheck": true, // this is workaround for jest-diff erroring on build
+    "lib": ["es2016", "dom"]
+  },
+  "files": ["./src/index.ts"],
+  "exclude": ["node_modules", "./src/__tests__"]
 }

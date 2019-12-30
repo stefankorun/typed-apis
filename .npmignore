@@ -21,6 +21,7 @@ firebase-debug.log*
 *.sln
 
 # Files
+/lib
 index.html
 .editorconfig
 tsconfig.json

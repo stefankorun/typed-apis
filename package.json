@@ -16,17 +16,19 @@
     "test": "jest",
     "serve": "parcel index.html",
     "build": "parcel build index.ts",
+    "prettier": "prettier --check 'src/**/*.ts'",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
+    "@types/lodash": "^4.14.149",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^1.0.1",
+    "prettier": "^1.19.1",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.136",
     "lodash": "^4.17.15"
   }
 }
